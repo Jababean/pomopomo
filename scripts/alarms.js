@@ -1,5 +1,5 @@
 /******************************************************************************
-  Podoro - Pomodoro timer, built into your browser
+  Gala - A study timer built into your browser
   Copyright (C) 2023-Present  Kirjh
 
   This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ export { alarmList, alarmExists, clearAlarm, createAlarm, startSession, pauseSes
 import { createAlert } from "./popup_handler.js";
 
 const alarmList = {
-  timeInputs: ["pomowork", "pomobreak", "pomobreaklong", "pomointerval", "goal"]
+  timeInputs: ["worktimer", "breaktimer", "longbreaktimer", "timerinterval", "goal"]
 }
 
 /*****************************************************************************/
@@ -46,11 +46,11 @@ const alarmExists = async () => {
 
 const startSession = async () => {
   console.log("creating timer");
-  const time = await chrome.storage.local.get(["pomowork"]);
-  chrome.storage.local.set({currentAlarm: time.pomowork, paused: false});
+  const time = await chrome.storage.local.get(["worktimer"]);
+  chrome.storage.local.set({currentAlarm: time.worktimer, paused: false});
 
-  createAlarm("pomowork", parseInt(time.pomowork));
-  return time.pomowork;
+  createAlarm("worktimer", parseInt(time.worktimer));
+  return time.worktimer;
 }
 
 /*****************************************************************************/
@@ -62,16 +62,16 @@ const clearAlarm = async (alarm=null) => {
     chrome.alarms.clear(alarm.name);
     return;
   }
-  // If @alarm is not specified all podoro alarms will be cleared instead.
-  await chrome.alarms.clear("pomowork");
-  await chrome.alarms.clear("pomobreak");
-  await chrome.alarms.clear("pomobreaklong");
+  // If @alarm is not specified all alarms will be cleared instead.
+  await chrome.alarms.clear("worktimer");
+  await chrome.alarms.clear("breaktimer");
+  await chrome.alarms.clear("longbreaktimer");
 }
 
 /*****************************************************************************/
 
 //  @name  (string) name of alarm. Must be either of: 
-//                    ["pomowork", "pomobreak", "pomobreaklong"]
+//                    ["worktimer", "breaktimer", "longbreaktimer"]
 //  @time  (number) length of alarm
 const createAlarm = async (name, time) => {
   await chrome.alarms.create(name, {delayInMinutes: time});

@@ -84,7 +84,7 @@
 }
 
 /* Counter */
-#pomodorocontainer {
+#studycontainer {
   margin-left: 1rem;
   margin-right: 1rem;
   margin-bottom: 0.5rem;
@@ -110,6 +110,39 @@
   width:0%;
   transition: 1s;
 }
+
+/* Timer Toggle */
+/*#advancedcontainer {
+  text-align: center;
+  margin: 0.3rem 0.25rem 0.7rem 0.25rem;
+}
+
+.settimer {
+  cursor: pointer;
+  color: #fff;
+  fill: #fff;
+
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--accent);
+  padding: 0.25em;
+}
+
+#setwork {
+  border-radius: 2em 0 0 2em;
+  padding-left: 0.5em;
+  background-color: var(--accent);
+}
+
+#setshort {
+  background-color: var(--accent);
+}
+
+#setlong {
+  border-radius: 0 2em 2em 0;
+  padding-right: 0.5em;
+  background-color: var(--accent);
+}*/
 
 /* Buttons */
 #playpausecontainer {

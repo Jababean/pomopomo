@@ -1,5 +1,5 @@
 /******************************************************************************
-  Podoro - Pomodoro timer, built into your browser
+  Gala - A study timer built into your browser
   Copyright (C) 2023-Present  Kirjh
 
   This program is free software: you can redistribute it and/or modify
@@ -36,26 +36,26 @@ const updateBreakText = (num = null) => {
 //  @intervalLength:  (number) long break interval
 const updateProgress = async (intervalLength = null) => {
   if (!intervalLength) {
-    const storage = await chrome.storage.local.get("pomointerval");
-    intervalLength = storage.pomointerval;
+    const storage = await chrome.storage.local.get("timerinterval");
+    intervalLength = storage.timerinterval;
   }
   const progressBar = document.getElementById("currentprogress");
-  const sessionStorage = await chrome.storage.local.get("pomocount");
-  if (!sessionStorage.pomocount) sessionStorage.pomocount = 0;
+  const sessionStorage = await chrome.storage.local.get("timercount");
+  if (!sessionStorage.timercount) sessionStorage.timercount = 0;
   const alarm = await alarmExists();
   if (!alarm) {
     progressBar.style.width = "0%";
     updateBreakText(intervalLength);
     return;
   }
-  if (alarm.name == "pomobreaklong") {
+  if (alarm.name == "longbreaktimer") {
     progressBar.style.width = "100%";
     updateBreakText();
     return;
   }
-  const progress = ((sessionStorage.pomocount % intervalLength) / intervalLength) * 100;
+  const progress = ((sessionStorage.timercount % intervalLength) / intervalLength) * 100;
   progressBar.style.width = `${progress}%`;
-  updateBreakText(intervalLength - (sessionStorage.pomocount % intervalLength));
+  updateBreakText(intervalLength - (sessionStorage.timercount % intervalLength));
 }
 
 /*****************************************************************************/

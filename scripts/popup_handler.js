@@ -1,5 +1,5 @@
 /******************************************************************************
-  Podoro - Pomodoro timer, built into your browser
+  Gala - A study timer built into your browser
   Copyright (C) 2023-Present  Kirjh
 
   This program is free software: you can redistribute it and/or modify
@@ -65,7 +65,7 @@ const menuHandler = (button) => {
   const togglebuttonList = document.getElementsByClassName("darktoolicon");
   
   if (button.id == "help") {
-    chrome.tabs.create({"url": "https://github.com/kirjh/podoro"});
+    chrome.tabs.create({"url": "https://github.com/kirjh/galatimer"});
     return;
   }
 

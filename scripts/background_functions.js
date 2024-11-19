@@ -1,5 +1,5 @@
 /******************************************************************************
-  Podoro - Pomodoro timer, built into your browser
+  Gala - A study timer built into your browser
   Copyright (C) 2023-Present  Kirjh
 
   This program is free software: you can redistribute it and/or modify
@@ -34,14 +34,14 @@ const sendMessage = (func, param) => {
 //
 //  Returns: true if interval divides count cleanly, false otherwise
 const countSessions = async (alarm) => {
-  const storage = await chrome.storage.local.get(["pomointerval", "pomocount"]);
+  const storage = await chrome.storage.local.get(["timerinterval", "timercount"]);
   
-  if (!storage.pomocount) storage.pomocount = 0;
-  storage.pomocount += 1;
+  if (!storage.timercount) storage.timercount = 0;
+  storage.timercount += 1;
 
-  await setCounter(storage.pomocount);
+  await setCounter(storage.timercount);
 
-  if (storage.pomocount % storage.pomointerval == 0) return true;
+  if (storage.timercount % storage.timerinterval == 0) return true;
   return false;
 }
 
@@ -62,9 +62,9 @@ const setTheme = async () => {
   
 /*****************************************************************************/
   
-//  @pomodoro:  (number) number of pomodoros elapsed
-const setCounter = async (pomodoro) => {
-  await chrome.storage.local.set({pomocount: pomodoro});
+//  @sessions:  (number) number of sessions elapsed
+const setCounter = async (sessions) => {
+  await chrome.storage.local.set({timercount: sessions});
   return null;
 }
 
@@ -124,10 +124,10 @@ const increaseDailyProgress = async () => {
 const updateStats = async (alarm) => {
   let stat;
   switch (alarm) {
-    case "pomobreak":
+    case "breaktimer":
       stat = "dailyshortbreaks";
       break;
-    case "pomobreaklong":
+    case "longbreaktimer":
       stat = "dailylongbreaks";
       break;
     default:
@@ -201,10 +201,10 @@ const completeTask = async (guid) => {
 
 const resetSettings = async () => {
   const settings = {
-    pomowork: 25,
-    pomobreak: 5,
-    pomobreaklong: 15,
-    pomointerval: 4,
+    worktimer: 25,
+    breaktimer: 5,
+    longbreaktimer: 15,
+    timerinterval: 4,
     goal: 4
   }
   await chrome.storage.local.set(settings);

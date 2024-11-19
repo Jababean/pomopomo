@@ -1,5 +1,5 @@
 /******************************************************************************
-  Podoro - Pomodoro timer, built into your browser
+  Gala - A study timer built into your browser
   Copyright (C) 2023-Present  Kirjh
 
   This program is free software: you can redistribute it and/or modify
@@ -24,17 +24,17 @@ let notifId = null;
 
 /*****************************************************************************/
 const notif = {
-  pomowork: {
+  worktimer: {
     iconUrl: "../icons/red_icon_256.png",
     title: "Focus Time",
     message: "focus session"
   },
-  pomobreak: {
+  breaktimer: {
     iconUrl: "../icons/green_icon_256.png",
     title: "Break Time",
     message: "break"
   },
-  pomobreaklong: {
+  longbreaktimer: {
     iconUrl: "../icons/blue_icon_256.png",
     title: "Break Time",
     message: "break"
@@ -93,11 +93,11 @@ chrome.alarms.onAlarm.addListener(async (alarm)=> {
 
   // Toggle next alarm
   switch (alarm.name) {
-    case "pomowork":
+    case "worktimer":
       const breakTime = await countSessions(alarm);
       await increaseDailyProgress();
       if (breakTime) {
-        alarmName = "pomobreaklong";
+        alarmName = "longbreaktimer";
         chrome.action.setIcon({
           path: {
             "16":"../icons/blue_icon_16.png",
@@ -107,7 +107,7 @@ chrome.alarms.onAlarm.addListener(async (alarm)=> {
         });
         setCounter(0);
       } else {
-        alarmName = "pomobreak";
+        alarmName = "breaktimer";
         chrome.action.setIcon({
           path: {
             "16":"../icons/green_icon_16.png",
@@ -118,7 +118,7 @@ chrome.alarms.onAlarm.addListener(async (alarm)=> {
       }
       break;
     default:
-      alarmName = "pomowork";
+      alarmName = "worktimer";
       chrome.action.setIcon({
         path: {
           "16":"../icons/red_icon_16.png",
@@ -169,7 +169,7 @@ chrome.storage.onChanged.addListener((changes) => {
   for (const [key, {newValue}] of Object.entries(changes)) {
     if (newValue) {
 
-      if (key == "pomointerval") sendMessage("updateProgress", newValue);
+      if (key == "timerinterval") sendMessage("updateProgress", newValue);
       if (list.includes(key)) sendMessage(`updateInput`, {key: key, value: newValue});
     }
   }
@@ -222,10 +222,10 @@ chrome.runtime.onMessage.addListener(async (message) => {
 // Change icon on browser start
 chrome.tabs.onActivated.addListener(async () => {
   let alarm = await alarmExists();
-  if (!alarm) alarm = {name: "pomowork"};
+  if (!alarm) alarm = {name: "worktimer"};
 
   switch (alarm.name) {
-    case "pomobreak":
+    case "breaktimer":
       chrome.action.setIcon({
         path: {
           "16":"../icons/green_icon_16.png",
@@ -234,7 +234,7 @@ chrome.tabs.onActivated.addListener(async () => {
         }
       });
       break;
-    case "pomobreaklong":
+    case "longbreaktimer":
       chrome.action.setIcon({
         path: {
           "16":"../icons/blue_icon_16.png",

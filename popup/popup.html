@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8"/>
-    <title>Podoro Timer</title>
+    <title>Gala Timer</title>
     <script type="module" src="../scripts/popup.js"></script>
     <link rel="stylesheet" href="../css/popup.css">
   </head>
@@ -10,10 +10,10 @@
     <div id="tabcontainer">     
       <!-- Main tabs -->
       <div id="maincontainer" style="position: relative;">
-        <!-- Podoro -->
+        <!-- Gala -->
         <div class="tab ">
           <div class="tabhead">
-            <span class="tabtitle">PODORO</span>
+            <span class="tabtitle">Gala</span>
           </div>
           <div class="clocktab">
             <div class="clock">
@@ -30,7 +30,7 @@
             </div>
           </div>
 
-          <div id="pomodorocontainer">
+          <div id="studycontainer">
             <span id="progressbar" class="lightaccent">
               <span id="currentprogress"></span>
             </span>
@@ -42,8 +42,14 @@
               <svg xmlns="http://www.w3.org/2000/svg" class="svgbutton" viewBox="0 0 384 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 128C0 92.7 28.7 64 64 64H320c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z"/></svg>
             </button>
           </div>
+
+          <!--<div id="advancedcontainer">
+            <button class="settimer" id="setwork" type="button">Work</button>
+            <button class="settimer" id="setshort" type="button">Short</button>
+            <button class="settimer" id="setlong" type="button">Long</button>
+          </div>-->
         </div>
-        <!-- End <Podoro> -->
+        <!-- End <Gala> -->
 
         <!-- Tools -->
         <div class="tab">
@@ -93,31 +99,31 @@
           <div class="tabbody">
             <div id="inputmenu">
               <div class="lengthsetting">
-                <label class="menutext" for="pomowork" title="Change length of a work session">Pomodoro</label>
+                <label class="menutext" for="worktimer" title="Change length of a study session">Study</label>
                 <div class="inputdiv">
                   <span class="inputicon red"></span>
-                  <input type="number" class= "menuinput timeinput" id="pomowork" name="pomowork" value="25" min="1" max="60">
+                  <input type="number" class= "menuinput timeinput" id="worktimer" name="worktimer" value="25" min="1" max="60">
                 </div>
               </div>
               <div class="lengthsetting">
-                <label class="menutext" for="pomobreak" title="Change length of a short break">Short Break</label>
+                <label class="menutext" for="breaktimer" title="Change length of a short break">Short Break</label>
                 <div class="inputdiv">
                   <span class="inputicon green"></span>
-                  <input type="number" class= "menuinput timeinput" id="pomobreak" name="pomobreak" value="5" min="1" max="60">
+                  <input type="number" class= "menuinput timeinput" id="breaktimer" name="breaktimer" value="5" min="1" max="60">
                 </div>
               </div>
               <div class="lengthsetting">
-                <label class="menutext" for="pomointerval" title="Change number of pomodoros to complete before a long break">Sessions</label>
+                <label class="menutext" for="timerinterval" title="Change number of sessions to complete before a long break">Sessions</label>
                 <div class="inputdiv">
                   <span class="inputicon"></span>
-                  <input type="number" class= "menuinput timeinput" id="pomointerval" name="pomointerval" value="4" min="1" max="60">
+                  <input type="number" class= "menuinput timeinput" id="timerinterval" name="timerinterval" value="4" min="1" max="60">
                 </div>
               </div>
               <div class="lengthsetting">
-                <label class="menutext" for="pomobreaklong" title="Change length of a long break session">Long Break</label>
+                <label class="menutext" for="longbreaktimer" title="Change length of a long break session">Long Break</label>
                 <div class="inputdiv">
                   <span class="inputicon blue"></span>
-                  <input type="number" class= "menuinput timeinput" id="pomobreaklong" name="pomobreaklong" value="15" min="1" max="60">
+                  <input type="number" class= "menuinput timeinput" id="longbreaktimer" name="longbreaktimer" value="15" min="1" max="60">
                 </div>
               </div>
             </div>
@@ -153,7 +159,7 @@
 
           <div class="vergrid">
             <div class="subtext">Version</div>
-            <div class="subtext version"><a class="githublink" href="https://github.com/kirjh/podoro" title="Visit Github repository" target="_blank">0.0.0</a></div>
+            <div class="subtext version"><a class="githublink" href="https://github.com/kirjh/galatimer" title="Visit Github repository" target="_blank">0.0.0</a></div>
           </div>
         </div>
         <!-- End <Settings> -->
@@ -176,7 +182,7 @@
 
           <div class="vergrid">
             <div class="subtext">Version</div>
-            <div class="subtext version"><a class="githublink" href="https://github.com/kirjh/podoro" title="Visit Github repository" target="_blank">0.0.0</a></div>
+            <div class="subtext version"><a class="githublink" href="https://github.com/kirjh/galatimer" title="Visit Github repository" target="_blank">0.0.0</a></div>
           </div>
         </div>
         <!-- End <Tasks> -->
@@ -232,7 +238,7 @@
           </div>
           <div class="vergrid">
             <div class="subtext">Version</div>
-            <div class="subtext version"><a class="githublink" href="https://github.com/kirjh/podoro" title="Visit Github repository" target="_blank">0.0.0</a></div>
+            <div class="subtext version"><a class="githublink" href="https://github.com/kirjh/galatimer" title="Visit Github repository" target="_blank">0.0.0</a></div>
           </div>
         </div>
         <!-- End <Progress> -->

@@ -13,18 +13,18 @@
 * Minor UI tweaks
 * Refactored code
 
-# Podoro Timer
-A pomodoro timer built into your browser.
+# Gala Timer
+A study timer built into your browser.
 
 ***
 
 ## <img src="./icons/red_icon_64.png" width="16px" /> About 
-Browser tab space is invaluable when studying, and shouldn't be cluttered by studying tools. Podoro tucks away into the browser's task bar, saving space while still providing a fully functional timer. The extension by default follows the following format for studying.
-> Four **25 minute** pomodoro sessions with **5 minute** short breaks inbetween followed by one **15 minute** long break afterwards.
+Browser tab space is invaluable when studying, and shouldn't be cluttered by studying tools. Gala tucks away into the browser's task bar, saving space while still providing a fully functional timer. The extension by default follows the following format for studying.
+> Four **25 minute** study sessions with **5 minute** short breaks inbetween followed by one **15 minute** long break afterwards.
 
 ## <img src="./icons/red_icon_64.png" width="16px" /> Features
-* __Pomodoro timer__
-  * 25 minute pomodoro sessions
+* __Study timer__
+  * 25 minute study sessions
   * 5 minute short breaks
   * 15 minute long breaks
 * __To-do list__
@@ -35,9 +35,9 @@ Browser tab space is invaluable when studying, and shouldn't be cluttered by stu
   * Adjustable session and break lengths
 
 ## <img src="./icons/red_icon_64.png" width="16px" /> License
-[GNU GPLv3](https://github.com/kirjh/podoro/blob/main/LICENSE.txt)
+[GNU GPLv3](https://github.com/kirjh/galatimer/blob/main/LICENSE.txt)
 
 <p align="center">
   <img src="./icons/red_icon_64.png" width="64" /> <br /> 
-  kirjh/podoro
+  kirjh/galatimer
 </p>

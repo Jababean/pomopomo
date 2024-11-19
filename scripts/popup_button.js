@@ -1,5 +1,5 @@
 /******************************************************************************
-  Podoro - Pomodoro timer, built into your browser
+  Gala - A study timer built into your browser
   Copyright (C) 2023-Present  Kirjh
 
   This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,7 @@ const changeButtonColour = (alarmName) => {
   const colour = document.querySelector(":root");
 
   switch (alarmName) {
-    case "pomobreak":
+    case "breaktimer":
       chrome.action.setIcon({
         path: {
           "16":"../icons/green_icon_16.png",
@@ -52,7 +52,7 @@ const changeButtonColour = (alarmName) => {
       });
       colour.style.setProperty("--accent", "#66be68");
       break;
-    case "pomobreaklong":
+    case "longbreaktimer":
       chrome.action.setIcon({
         path: {
           "16":"../icons/blue_icon_16.png",
@@ -107,7 +107,7 @@ const toggleStopButton = async () => {
   
   primaryButton.classList.remove("alarmbuttonactive");
   stopButton.classList.remove("stopbuttonactive");
-  changeButtonColour("pomowork");
+  changeButtonColour("worktimer");
   updateButton(primaryButton, "start", "play_arrow");
   updateTime();
 }

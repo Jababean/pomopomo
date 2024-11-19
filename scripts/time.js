@@ -1,5 +1,5 @@
 /******************************************************************************
-  Podoro - Pomodoro timer, built into your browser
+  Gala - A study timer built into your browser
   Copyright (C) 2023-Present  Kirjh
 
   This program is free software: you can redistribute it and/or modify
@@ -55,9 +55,9 @@ const updateTime = async () => {
   let circumference = svghand.r.baseVal.value * 2 * Math.PI;
 
   // If an active alarm does not exist, display current value of 
-  // the pomowork setting.
+  // the worktimer setting.
   if (!alarm) {
-    timeDisplay.innerHTML = (!document.getElementById("pomowork").value) ? 0 : document.getElementById("pomowork").value;
+    timeDisplay.innerHTML = (!document.getElementById("worktimer").value) ? 0 : document.getElementById("worktimer").value;
     svghand.style.strokeDasharray = `${circumference} ${circumference}`;
     svghand.style.strokeDashoffset = `${circumference}`;
     svghandborder.style.strokeDasharray = `${circumference} ${circumference}`;

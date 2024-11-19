@@ -1,5 +1,5 @@
 /******************************************************************************
-  Podoro - Pomodoro timer, built into your browser
+  Gala - A study timer built into your browser
   Copyright (C) 2023-Present  Kirjh
 
   This program is free software: you can redistribute it and/or modify
@@ -100,7 +100,6 @@ const updateTasks = async () => {
 
   countTasks(Object.keys(storage.tasks).length);
   for (const task in storage.tasks) {
-    console.log(storage.tasks[task]);
     addTask(storage.tasks[task]);
   }
 }
