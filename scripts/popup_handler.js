@@ -80,8 +80,8 @@ const menuHandler = (button) => {
     if (togglebutton.classList.contains("activeicon") && togglebutton.id != "advanced") {
       const tab = document.getElementById(togglebutton.id + "tab");
       toggleTab(tab, "none", true);
+      togglebutton.classList.remove("activeicon");
     }
-    togglebutton.classList.remove("activeicon");
   }
   
   if (tabOpened) button.classList.add("activeicon");
