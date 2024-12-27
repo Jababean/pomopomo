@@ -1,17 +1,6 @@
-## What's New: 0.9.5 (30/8/2024)
-* Localized Fonts
-* Implemented progress tab
-  * Tracks daily sessions, breaks, long breaks, and tasks completed
-  * Tracks daily streaks for hitting session goals
-* Implemented tasks tab
-  * Users may create, check off, and remove up to 25 tasks
-* Added function to toggle session automatically starting
-* Changed notifications presentation
-* Changed clock face
-* Simplified toolbar tab
-* Tabs now allow scrolling instead of overflowing container
-* Minor UI tweaks
-* Refactored code
+## What's New: 0.9.9 (30/8/2024)
+* Added Advanced mode
+* Cleaned up UI
 
 # Gala Timer
 A study timer built into your browser.
@@ -19,7 +8,7 @@ A study timer built into your browser.
 ***
 
 ## <img src="./icons/red_icon_64.png" width="16px" /> About 
-Browser tab space is invaluable when studying, and shouldn't be cluttered by studying tools. Gala tucks away into the browser's task bar, saving space while still providing a fully functional timer. The extension by default follows the following format for studying.
+Browser tab space is invaluable when studying, and shouldn't be cluttered by studying tools. Gala tucks away into the browser's task bar, saving space while still providing a fully functional timer. The extension by default follows the following format, and also includes complete customizability for the user.
 > Four **25 minute** study sessions with **5 minute** short breaks inbetween followed by one **15 minute** long break afterwards.
 
 ## <img src="./icons/red_icon_64.png" width="16px" /> Features
