@@ -17,7 +17,7 @@
 ******************************************************************************/
 
 export { alarmList, alarmExists, clearAlarm, createAlarm, startSession, pauseSession, resumeSession, increaseAlarmLength };
-
+import { sendMessage } from "./background_functions.js";
 import { createAlert } from "./popup_handler.js";
 
 const alarmList = {
@@ -76,26 +76,21 @@ const clearAlarm = async (alarm=null) => {
 const createAlarm = async (name, time) => {
   await chrome.alarms.create(name, {delayInMinutes: time});
   console.log(`created alarm "${name}" with a delay of (${time}) minutes`);
+  sendMessage("disableOverride", "true");
 }
 
 /*****************************************************************************/
 
-//  @newalarm  (boolean) true if function is called at the beginning of a session
-const pauseSession = async(newalarm) => {
+const pauseSession = async() => {
   console.log("pausing alarms");
   const alarm = await alarmExists();
   if (!alarm) return;
   
   clearAlarm();
 
-  if (newalarm) {
-    const storage = await chrome.storage.local.get("currentAlarm");
-    alarm.scheduledTime = storage.currentAlarm * 60000;
-  } else {
-    // Convert unix time to time in milliseconds
-    alarm.scheduledTime -= Date.now();
-  } 
-  alarm.paused = true;
+
+  // Convert unix time to time in milliseconds
+  alarm.scheduledTime -= Date.now();
 
   await chrome.storage.local.set({paused: true, activeAlarm: alarm});
   return null;
@@ -111,7 +106,8 @@ const resumeSession = async() => {
 
   createAlarm(storage.activeAlarm.name, storage.activeAlarm.scheduledTime/60000);
 
-  chrome.storage.local.set({paused: false});
+  storage.activeAlarm.new = false;
+  await chrome.storage.local.set({paused: false, activeAlarm: storage.activeAlarm});
   return null;
 }
 

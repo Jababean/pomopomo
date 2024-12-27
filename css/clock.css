@@ -5,6 +5,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .clock {
@@ -18,10 +22,6 @@
   position: absolute;
   color: #fff;
   cursor: default;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .time {
@@ -45,7 +45,7 @@
 }
 
 #svgdial {
-  fill: #756a69;
+  fill: var(--dark);
 }
 
 #svgbg {
@@ -102,7 +102,7 @@
 
 #currentprogress {
   position: absolute;
-  background-color: #918483; /* #d66868 */
+  background-color: var(--dark); /* #d66868 */
   border-radius: 4em;
   top: 0;
   left: 0;
@@ -112,9 +112,16 @@
 }
 
 /* Timer Toggle */
-/*#advancedcontainer {
+#advancedcontainer {
+  display: none;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  margin: 0.3rem 0.25rem 0.7rem 0.25rem;
+  margin: 0rem 0.25rem 0.7rem 0.25rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .settimer {
@@ -123,37 +130,82 @@
   fill: #fff;
 
   border-width: 1px;
-  border-style: solid;
-  border-color: var(--accent);
+  border-color: var(--dark);
+  background-color: var(--dark);
   padding: 0.25em;
 }
 
 #setwork {
   border-radius: 2em 0 0 2em;
   padding-left: 0.5em;
-  background-color: var(--accent);
+  width: 30%;
+  border-style: solid none solid solid;
 }
 
 #setshort {
-  background-color: var(--accent);
+  width: 30%;
+  border-style: solid none solid none;
 }
 
 #setlong {
   border-radius: 0 2em 2em 0;
   padding-right: 0.5em;
-  background-color: var(--accent);
-}*/
+  width: 30%;
+  border-style: solid solid solid none;
+}
+
+#setwork:hover,
+#setshort:hover,
+#setlong:hover {
+  border-color: var(--border);
+  background-color: var(--tabBG);
+  color: var(--fontText);
+  fill: var(--fontText);
+}
+
+#setwork:active,
+#setshort:active,
+#setlong:active {
+  border-color: var(--dark);
+  background-color: var(--dark);
+  color: #fff;
+  fill: #fff;
+}
+
+#setwork:disabled,
+#setshort:disabled,
+#setlong:disabled {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border-color: var(--border);
+  background-color: var(--tabBG);
+  color: var(--fontSubtext);
+  fill: var(--fontSubtext);
+  cursor: default;
+}
 
 /* Buttons */
 #playpausecontainer {
   text-align: center;
   font-size:0;
   margin: 0.3rem 0.25rem 0.7rem 0.25rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .alarmbutton {
   border-radius: 2em;
   width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .alarmbutton,
@@ -183,9 +235,11 @@
 */
 .alarmbuttonactive {
   border-radius: 2em 0 0 2em;
-  display: inline;
   width: 65%;
   padding-left: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .stopbutton {
@@ -194,7 +248,9 @@
 
 .stopbuttonactive {
   border-radius: 0 2em 2em 0;
-  display: inline;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 25%;
   padding-right: 1em;
 }

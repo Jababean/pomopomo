@@ -16,14 +16,13 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ******************************************************************************/
 
-export { changeTheme, toggleAuto, inputChange, updateInput, resetSettings };
+export { changeTheme, toggleAuto, inputChange, updateInput, resetSettings, toggleAdvanced };
 
 /*****************************************************************************/
 
 //  @theme:  (boolean) theme is light
 const changeTheme = (theme) => {
   const colour = document.querySelector(":root");
-  const button = document.getElementById("theme");
   const toggle = document.getElementById("toggletheme");
 
   if (theme) {
@@ -89,3 +88,16 @@ const resetSettings = (settings) => {
 }
 
 /*****************************************************************************/
+
+//  @toggle  (boolean) true if enabled
+const toggleAdvanced = (toggle) => {
+  const button = document.getElementById("advanced");
+  const container = document.getElementById("advancedcontainer");
+  if (toggle) {
+    button.classList.add("activeicon");
+    container.style.display = "flex";
+  } else {
+    button.classList.remove("activeicon");
+    container.style.display = "none";
+  }
+}

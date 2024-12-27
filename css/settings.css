@@ -28,7 +28,7 @@
   border-radius: 50% 0 0 50%;
   height: 1.2em;
   width: 1.2em;
-  background-color: #918483; /* #a3a3a3 */
+  background-color: var(--dark); /* #a3a3a3 */
 
   top: 0;
   bottom: 0;

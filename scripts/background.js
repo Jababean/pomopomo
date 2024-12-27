@@ -16,9 +16,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ******************************************************************************/
 
-import { alarmList, createAlarm, startSession, pauseSession, resumeSession, clearAlarm } from "./alarms.js";
-import { sendMessage, countSessions, setTheme, setCounter, toggleAuto, checkDate, increaseDailyProgress, updateStats, addTask, closeTask, completeTask, resetSettings, resetProgress } from "./background_functions.js";
-import { alarmExists } from "./alarms.js";
+import { alarmExists, alarmList, createAlarm, startSession, pauseSession, resumeSession, clearAlarm } from "./alarms.js";
+import { sendMessage, countSessions, setTheme, setCounter, toggleAuto, checkDate, increaseDailyProgress, updateStats, addTask, closeTask, completeTask, resetSettings, resetProgress, overrideAlarm, toggleAdvanced } from "./background_functions.js";
 
 let notifId = null;
 
@@ -80,6 +79,7 @@ chrome.notifications.onButtonClicked.addListener(async (id, button)=>{
     sendMessage("resumeTimer");
   }
 });
+
 /*****************************************************************************/
 
 chrome.alarms.onAlarm.addListener(async (alarm)=> {
@@ -87,6 +87,7 @@ chrome.alarms.onAlarm.addListener(async (alarm)=> {
 
   let time;
   let alarmName;
+  let alarmColour;
   const storage = await chrome.storage.local.get(["toggleauto"]);
   await processBackendRequest("checkDate");
   await updateStats(alarm.name);
@@ -96,38 +97,28 @@ chrome.alarms.onAlarm.addListener(async (alarm)=> {
     case "worktimer":
       const breakTime = await countSessions(alarm);
       await increaseDailyProgress();
+
       if (breakTime) {
         alarmName = "longbreaktimer";
-        chrome.action.setIcon({
-          path: {
-            "16":"../icons/blue_icon_16.png",
-            "32":"../icons/blue_icon_32.png",
-            "64":"../icons/blue_icon_64.png",
-          }
-        });
+        alarmColour = "blue";
         setCounter(0);
       } else {
         alarmName = "breaktimer";
-        chrome.action.setIcon({
-          path: {
-            "16":"../icons/green_icon_16.png",
-            "32":"../icons/green_icon_32.png",
-            "64":"../icons/green_icon_64.png",
-          }
-        });
+        alarmColour = "green";
       }
       break;
     default:
       alarmName = "worktimer";
-      chrome.action.setIcon({
-        path: {
-          "16":"../icons/red_icon_16.png",
-          "32":"../icons/red_icon_32.png",
-          "64":"../icons/red_icon_64.png"
-        }
-      });
+      alarmColour = "red";
       break;
   }
+  chrome.action.setIcon({
+    path: {
+      "16":"../icons/" + alarmColour + "_icon_16.png",
+      "32":"../icons/" + alarmColour + "_icon_32.png",
+      "64":"../icons/" + alarmColour + "_icon_64.png"
+    }
+  });
 
   // Update time 
   time = await chrome.storage.local.get([alarmName]);
@@ -146,18 +137,23 @@ chrome.alarms.onAlarm.addListener(async (alarm)=> {
     createButtonNotification(notifTemplate);
   }
 
-  
-
   // Create alarm
   chrome.storage.local.set({["currentAlarm"] : time});
-  await createAlarm(alarmName, parseInt(time));
 
   sendMessage("changeButtonColour", alarmName);
   sendMessage("setCounter", null);
 
-  if (!storage.toggleauto) {
-    await pauseSession(true);
+  if (storage.toggleauto) {
+    await createAlarm(alarmName, time);
+  } else {
+    // Pause alarm
+    const newAlarm = {};
+    newAlarm.name = alarmName;
+    newAlarm.scheduledTime = time * 60000;
+    newAlarm.new = true;
+    await chrome.storage.local.set({paused: true, activeAlarm: newAlarm});
     sendMessage("pauseTimer");
+    sendMessage("disableOverride", "false");
   }
     
 });
@@ -185,6 +181,7 @@ const runBackend = {
   
   stopTimer: async (param) => {setCounter(0); 
                           sendMessage("setCounter", null);
+                          sendMessage("disableOverride", "false");
                           await chrome.storage.local.set({activeAlarm: null});
                           return await clearAlarm();},
 
@@ -198,7 +195,10 @@ const runBackend = {
   completeTask: async (param) => {return await completeTask(param);},
 
   resetSettings: async (param) => {return await resetSettings();},
-  resetProgress: async (param) => {return await resetProgress();}
+  resetProgress: async (param) => {return await resetProgress();},
+
+  overrideAlarm: async (param) => {return await overrideAlarm(param);},
+  toggleAdvanced: async (param) => {return await toggleAdvanced();}
 }
 
 /*****************************************************************************/

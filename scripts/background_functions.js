@@ -17,7 +17,8 @@
 ******************************************************************************/
 
 import { getDate, setDate } from "./time.js";
-export { sendMessage, countSessions, setTheme, setCounter, toggleAuto, checkDate, increaseDailyProgress, updateStats, addTask, closeTask, completeTask, resetSettings, resetProgress };
+import { alarmExists } from "./alarms.js";
+export { sendMessage, countSessions, setTheme, setCounter, toggleAuto, checkDate, increaseDailyProgress, updateStats, addTask, closeTask, completeTask, resetSettings, resetProgress, overrideAlarm, toggleAdvanced };
 
 /*****************************************************************************/
 
@@ -228,3 +229,41 @@ const resetProgress = async () => {
 }
 
 /*****************************************************************************/
+
+// @alarmName  (string) name of overriding alarm
+const overrideAlarm = async (alarmName) => {
+  const alarm = await alarmExists();
+  const storage = await chrome.storage.local.get(["paused", "activeAlarm"]);
+  // return if there is an active alarm
+  if (alarm && storage.paused == false) return;
+
+  const newAlarm = {};
+
+  let time = await chrome.storage.local.get([alarmName]);
+  time = time[alarmName];
+
+  chrome.storage.local.set({["currentAlarm"] : time});
+
+  sendMessage("changeButtonColour", alarmName);
+  sendMessage("setCounter", null);
+  sendMessage("pauseTimer");
+
+  newAlarm.name = alarmName;
+  newAlarm.scheduledTime = time * 60000;
+  newAlarm.new = true;
+  await chrome.storage.local.set({paused: true, activeAlarm: newAlarm});
+  
+
+
+}
+
+/*****************************************************************************/
+
+const toggleAdvanced = async () => {
+  const storage = await chrome.storage.local.get(["advanced"]);
+  if (!storage.advanced) storage.advanced = false;
+  storage.advanced = !storage.advanced;
+  await chrome.storage.local.set({advanced: storage.advanced});
+
+  return storage.advanced;
+}

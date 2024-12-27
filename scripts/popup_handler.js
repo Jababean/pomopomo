@@ -16,7 +16,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ******************************************************************************/
 
-export { createAlert, toggleHandler, toggleTools, sendMessage, menuHandler, resetHandler };
+export { createAlert, toggleHandler, toggleTools, sendMessage, menuHandler, resetHandler, overrideHandler };
 
 import { alarmExists } from "./alarms.js";
 import { updateProgress, updateDailyProgress } from "./popup_progress.js";
@@ -64,8 +64,8 @@ const menuHandler = (button) => {
   const tab = document.getElementById(button.id + "tab");
   const togglebuttonList = document.getElementsByClassName("darktoolicon");
   
-  if (button.id == "help") {
-    chrome.tabs.create({"url": "https://github.com/kirjh/galatimer"});
+  if (button.id == "advanced") {
+    sendMessage("toggleAdvanced");
     return;
   }
 
@@ -77,7 +77,7 @@ const menuHandler = (button) => {
   
 
   for (const togglebutton of togglebuttonList) {
-    if (togglebutton.classList.contains("activeicon")) {
+    if (togglebutton.classList.contains("activeicon") && togglebutton.id != "advanced") {
       const tab = document.getElementById(togglebutton.id + "tab");
       toggleTab(tab, "none", true);
     }
@@ -146,6 +146,23 @@ const resetHandler = (button) => {
       sendMessage("resetProgress");
       break;
     default:
+      break;
+  }
+}
+
+/*****************************************************************************/
+
+//  @button:  (DOM object) override button
+const overrideHandler = async (button) => {
+  switch (button.id) {
+    case "setshort":
+      sendMessage("overrideAlarm", "breaktimer");
+      break;
+    case "setlong":
+      sendMessage("overrideAlarm", "longbreaktimer");
+      break;
+    default:
+      sendMessage("overrideAlarm", "worktimer");
       break;
   }
 }

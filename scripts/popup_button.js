@@ -16,7 +16,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ******************************************************************************/
 
-export {changeButtonColour, togglePrimaryButton, toggleStopButton};
+export {changeButtonColour, togglePrimaryButton, toggleStopButton, disableOverride};
 
 import { updateTime } from "./time.js";
 
@@ -111,3 +111,19 @@ const toggleStopButton = async () => {
   updateButton(primaryButton, "start", "play_arrow");
   updateTime();
 }
+
+/*****************************************************************************/
+
+// @toggle  (boolean) true to disable override buttons 
+const disableOverride = async (toggle) => {
+  const overrideList = document.getElementsByClassName("settimer");
+
+  for (const button of overrideList) {
+    if (toggle == "true") 
+      button.setAttribute("disabled", "true");
+    else 
+      button.removeAttribute("disabled");
+  }
+}
+
+/*****************************************************************************/

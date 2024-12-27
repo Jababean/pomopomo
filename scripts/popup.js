@@ -18,9 +18,9 @@
 
 import { alarmExists } from "./alarms.js";
 import { getTimeFromStorage, updateTime } from "./time.js";
-import { toggleHandler, toggleTools, sendMessage, menuHandler, resetHandler } from "./popup_handler.js";
-import { changeTheme, toggleAuto, updateInput, inputChange, resetSettings } from "./popup_settings.js";
-import {changeButtonColour, togglePrimaryButton, toggleStopButton} from "./popup_button.js";
+import { toggleHandler, toggleTools, sendMessage, menuHandler, resetHandler, overrideHandler } from "./popup_handler.js";
+import { changeTheme, toggleAuto, updateInput, inputChange, resetSettings, toggleAdvanced } from "./popup_settings.js";
+import { changeButtonColour, togglePrimaryButton, toggleStopButton, disableOverride } from "./popup_button.js";
 import JSON from '../manifest.json' with {type: 'json'};
 import { updateProgress, updateDailyProgress, resetProgress } from "./popup_progress.js";
 import { countTasks, createTask, addTask, closeTask, completeTask, updateTasks } from "./popup_tasks.js";
@@ -41,6 +41,7 @@ const runFrontend = {
   theme: (param) => {changeTheme(param);},
   toggleauto: (param) => {toggleAuto(param);},
   checkDate: (param) => {updateDailyProgress()},
+  disableOverride: async (param) => {disableOverride(param)},
 
   addTask: (param) => {addTask(param);},
   closeTask: (param) => {closeTask(param);},
@@ -48,7 +49,10 @@ const runFrontend = {
   countTasks: (param) => {countTasks(param);},
 
   resetSettings: async (param) => {resetSettings(param);},
-  resetProgress: async (param) => {resetProgress(param);}
+  resetProgress: async (param) => {resetProgress(param);},
+
+  overrideAlarm: async (param) => {},
+  toggleAdvanced: async (param) => {toggleAdvanced(param);}
 }
 
 /*****************************************************************************/
@@ -60,6 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const stopButton = document.getElementsByClassName("stopbutton")[0];
   const inputList = document.getElementsByClassName("timeinput");
   const resetList = document.getElementsByClassName("resetbutton");
+  const overrideList = document.getElementsByClassName("settimer");
   const toggleButtonList = document.getElementsByClassName("darktoolicon");
   const toggleSettingList = document.getElementsByClassName("togglesettings");
   const versionLinks = document.getElementsByClassName("githublink");
@@ -75,24 +80,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Retrive data from storage
   const storedTime = await getTimeFromStorage();
-  const storage = await chrome.storage.local.get(["theme", "toggleauto"]);
+  const storage = await chrome.storage.local.get(["advanced", "theme", "toggleauto", "paused"]);
 
   const alarm = await alarmExists();
   
   // Initialize active/inactive state
   if (alarm) {
-    primaryButton.id = (alarm.paused) ? "pause" : "start";
-    let alarmTime = await chrome.storage.local.get("currentAlarm");
-    if (alarmTime.currentAlarm) {
-      changeButtonColour(alarm.name);
-    }
+    if (!alarm.new) disableOverride("true");
+    primaryButton.id = (storage.paused) ? "pause" : "start";
+    changeButtonColour(alarm.name);
   } else {
+    disableOverride("false");
     changeButtonColour("worktimer");
   }
   if (storage.theme && storage.theme == "dark")
     changeTheme(false);
   if (storage.toggleauto)
     toggleAuto(true);
+  if (storage.advanced)
+    toggleAdvanced(true);
 
   togglePrimaryButton(primaryButton.id);
   updateTime();
@@ -107,7 +113,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   primaryButton.addEventListener('click', () => {sendMessage(`${primaryButton.id}Timer`)});
   stopButton.addEventListener('click', () => {sendMessage(`stopTimer`)});
-
+  for (const button of overrideList) {
+    button.addEventListener('click', ()=> {overrideHandler(button);});
+  }
   for (const button of toggleButtonList) {
     button.addEventListener('click', ()=> {menuHandler(button);});
   }
