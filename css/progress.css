@@ -137,5 +137,5 @@
   left: 0;
   height: 0.5em;
   width:50%;
-  transition: 1s;
+  transition: scale 1s;
 }

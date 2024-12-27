@@ -108,6 +108,7 @@
   left: 0;
   height: 0.5em;
   width:0%;
+  transition-property: width;
   transition: 1s;
 }
 
