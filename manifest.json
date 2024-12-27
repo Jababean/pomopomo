@@ -1,6 +1,6 @@
 {
   "name": "Gala Study Timer",
-  "version": "0.9.9",
+  "version": "0.9.91",
   "manifest_version": 3,
   "description":  "A study timer built into your browser.",
   "permissions": [

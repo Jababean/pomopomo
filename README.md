@@ -1,6 +1,7 @@
-## What's New: 0.9.9 (30/8/2024)
+## What's New: 0.9.91 (30/8/2024)
 * Added Advanced mode
 * Cleaned up UI
+* Fixed Minor UI bug
 
 # Gala Timer
 A study timer built into your browser.
