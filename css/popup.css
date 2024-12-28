@@ -62,6 +62,12 @@ body {
   overflow-y: scroll;
   flex-direction:column;
   padding: 0.25rem;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.tabbody::-webkit-scrollbar {
+  display: none;
 }
 
 .togglecontainer {
